@@ -1,56 +1,37 @@
 const selected = {
   player: null,
   shot: null,
-  result: null
+  result: null,
 };
 
-const playerOptions = ['A', 'B', 'C', 'D'];
-const shotOptions = [
-  { value: 'FS', label: 'フォア (FS)' },
-  { value: 'BS', label: 'バック (BS)' },
-  { value: 'SV', label: 'サーブ (SV)' },
-  { value: 'NT', label: 'ネット (NT)' }
-];
-const resultOptions = ['○', '×'];
-
-function createButton(value, label = value) {
-  const btn = document.createElement('button');
-  btn.textContent = label;
-  btn.setAttribute('data-value', value);
-  return btn;
-}
-
-function setupGroup(containerId, options, key, useLabel = false) {
-  const container = document.getElementById(containerId);
-  options.forEach(opt => {
-    const value = typeof opt === 'string' ? opt : opt.value;
-    const label = typeof opt === 'string' ? opt : opt.label;
-    const btn = createButton(value, label);
-    btn.addEventListener('click', () => {
-      container.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selected[key] = value;
+function setupSelection(groupId, key) {
+  const buttons = document.querySelectorAll(`#${groupId} button`);
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      selected[key] = button.dataset.value;
     });
-    container.appendChild(btn);
   });
 }
 
-setupGroup('player-group', playerOptions, 'player');
-setupGroup('shot-group', shotOptions, 'shot');
-setupGroup('result-group', resultOptions, 'result');
+setupSelection("player-buttons", "player");
+setupSelection("shot-buttons", "shot");
+setupSelection("result-buttons", "result");
 
-document.getElementById('submit-button').addEventListener('click', () => {
+document.getElementById("record-btn").addEventListener("click", () => {
   const { player, shot, result } = selected;
   if (!player || !shot || !result) {
-    alert('すべての項目を選択してください。');
+    alert("全て選択してください");
     return;
   }
 
-  const li = document.createElement('li');
-  li.textContent = `${player} - ${shot} - ${result}`;
-  document.getElementById('record-list').appendChild(li);
+  const record = `${player} ${shot} ${result}`;
+  const li = document.createElement("li");
+  li.textContent = record;
+  document.getElementById("record-list").appendChild(li);
 
-  // 選択解除
-  Object.keys(selected).forEach(k => selected[k] = null);
-  document.querySelectorAll('.selected').forEach(btn => btn.classList.remove('selected'));
+  // 選択リセット
+  Object.keys(selected).forEach(key => selected[key] = null);
+  document.querySelectorAll(".selected").forEach(btn => btn.classList.remove("selected"));
 });

@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>テニスダブルス記録</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>テニスデータ入力</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>テニス ダブルス記録</h1>
+  <h1>テニスダブルス分析ツール</h1>
 
-  <div class="section" id="player-section">
-    <span class="label">プレイヤー:</span>
-    <div class="button-group" id="player-group"></div>
-  </div>
+  <section>
+    <h2>プレイヤー選択</h2>
+    <div class="button-group" id="player-buttons">
+      <button data-value="A">A</button>
+      <button data-value="B">B</button>
+      <button data-value="C">C</button>
+      <button data-value="D">D</button>
+    </div>
+  </section>
 
-  <div class="section" id="shot-section">
-    <span class="label">ショット種別:</span>
-    <div class="button-group" id="shot-group"></div>
-  </div>
+  <section>
+    <h2>ショット種別</h2>
+    <div class="button-group" id="shot-buttons">
+      <button data-value="FS">フォア (FS)</button>
+      <button data-value="BS">バック (BS)</button>
+      <button data-value="SV">サーブ (SV)</button>
+      <button data-value="NT">ネット (NT)</button>
+    </div>
+  </section>
 
-  <div class="section" id="result-section">
-    <span class="label">結果:</span>
-    <div class="button-group" id="result-group"></div>
-  </div>
+  <section>
+    <h2>結果</h2>
+    <div class="button-group" id="result-buttons">
+      <button data-value="○">○</button>
+      <button data-value="×">×</button>
+    </div>
+  </section>
 
-  <button id="submit-button">記録する</button>
-
-  <h2>記録一覧</h2>
-  <ul id="record-list"></ul>
+  <section>
+    <h2>記録</h2>
+    <button id="record-btn">記録する</button>
+    <ul id="record-list"></ul>
+  </section>
 
   <script src="script.js"></script>
 </body>
