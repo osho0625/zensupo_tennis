@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>テニスダブルス記録</title>
+</head>
+<body>
+  <h1>テニスポイント記録</h1>
+  <form id="record-form">
+    <label>プレイヤー: <input type="text" id="player" required></label><br>
+    <label>ショット種別: <input type="text" id="shot" required></label><br>
+    <label>成功/ミス: 
+      <select id="result">
+        <option value="○">成功</option>
+        <option value="×">ミス</option>
+      </select>
+    </label><br>
+    <button type="submit">記録する</button>
+  </form>
+
+  <h2>記録一覧</h2>
+  <ul id="record-list"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>
