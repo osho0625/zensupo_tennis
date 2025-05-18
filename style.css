@@ -1,0 +1,64 @@
+body {
+  font-family: sans-serif;
+  margin: 1em;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.section {
+  margin-top: 1.5em;
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.button-group button {
+  flex: 1 1 45%;
+  font-size: 1.2em;
+  padding: 0.6em;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+  background-color: #f0f0f0;
+}
+
+.button-group button.selected {
+  background-color: #007BFF;
+  color: white;
+  border-color: #0056b3;
+}
+
+#submit-button {
+  margin-top: 1em;
+  width: 100%;
+  font-size: 1.2em;
+  padding: 0.7em;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 0.4em;
+}
+
+ul#record-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1em;
+}
+
+ul#record-list li {
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+}

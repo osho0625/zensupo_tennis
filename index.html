@@ -4,107 +4,31 @@
   <meta charset="UTF-8">
   <title>テニスダブルス記録</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 1em;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    h1, h2 {
-      text-align: center;
-    }
-
-    form label {
-      display: block;
-      margin-top: 1em;
-    }
-
-    input, select, button {
-      font-size: 1.2em;
-      width: 100%;
-      padding: 0.5em;
-      box-sizing: border-box;
-    }
-
-    button {
-      margin-top: 1em;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 0.4em;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    ul#record-list {
-      list-style-type: none;
-      padding-left: 0;
-      margin-top: 1em;
-    }
-
-    ul#record-list li {
-      padding: 0.5em;
-      border-bottom: 1px solid #ccc;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>テニス ダブルス記録</h1>
 
-  <form id="record-form">
-    <label>プレイヤー:
-      <select id="player">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-      </select>
-    </label>
+  <div class="section" id="player-section">
+    <span class="label">プレイヤー:</span>
+    <div class="button-group" id="player-group"></div>
+  </div>
 
-    <label>ショット種別:
-      <select id="shot">
-        <option value="FS">フォアストローク (FS)</option>
-        <option value="BS">バックストローク (BS)</option>
-        <option value="SV">サーブ (SV)</option>
-        <option value="NT">ネットプレー (NT)</option>
-      </select>
-    </label>
+  <div class="section" id="shot-section">
+    <span class="label">ショット種別:</span>
+    <div class="button-group" id="shot-group"></div>
+  </div>
 
-    <label>結果:
-      <select id="result">
-        <option value="○">成功（○）</option>
-        <option value="×">ミス（×）</option>
-      </select>
-    </label>
+  <div class="section" id="result-section">
+    <span class="label">結果:</span>
+    <div class="button-group" id="result-group"></div>
+  </div>
 
-    <button type="submit">記録する</button>
-  </form>
+  <button id="submit-button">記録する</button>
 
   <h2>記録一覧</h2>
   <ul id="record-list"></ul>
 
-  <script>
-    const form = document.getElementById('record-form');
-    const list = document.getElementById('record-list');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const player = document.getElementById('player').value;
-      const shot = document.getElementById('shot').value;
-      const result = document.getElementById('result').value;
-
-      const item = document.createElement('li');
-      item.textContent = `${player} - ${shot} - ${result}`;
-      list.appendChild(item);
-
-      form.reset();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
