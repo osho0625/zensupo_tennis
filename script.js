@@ -73,3 +73,36 @@ function updateMatchList() {
     matchListEl.appendChild(li);
   });
 }
+
+function updateMatchList() {
+  const matchListEl = document.getElementById("match-list");
+  matchListEl.innerHTML = "";
+
+  allMatches.forEach((matchRecords, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = `試合 ${index + 1}：${matchRecords.length} ポイント`;
+    btn.style.display = "block";
+    btn.style.marginBottom = "5px";
+    btn.addEventListener("click", () => {
+      showMatchDetail(index);
+    });
+    matchListEl.appendChild(btn);
+  });
+}
+
+function showMatchDetail(matchIndex) {
+  const detailListEl = document.getElementById("match-detail-list");
+  detailListEl.innerHTML = "";
+
+  const matchRecords = allMatches[matchIndex];
+  if (!matchRecords) {
+    detailListEl.textContent = "詳細データがありません";
+    return;
+  }
+
+  matchRecords.forEach((record, i) => {
+    const li = document.createElement("li");
+    li.textContent = `ポイント ${i + 1}: ${record}`;
+    detailListEl.appendChild(li);
+  });
+}
