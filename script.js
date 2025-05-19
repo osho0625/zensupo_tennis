@@ -55,6 +55,25 @@ document.getElementById("finish-match-btn").addEventListener("click", () => {
   // 画面の試合一覧に追加表示
   updateMatchList();
 
+  // APIへ送信
+  const apiUrl = 'https://tennis-api.onrender.com/api/matches';  // 自分のAPI URLに変更してください
+  const matchData = {
+    matchNumber: allMatches.length,
+    records: currentMatchRecords
+  };
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(matchData),
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('送信失敗: ' + response.status);
+      return response.json();
+    })
+    .then(data => console.log('送信成功:', data))
+    .catch(error => console.error('送信エラー:', error));
+
   // 今の試合記録リセット
   currentMatchRecords = [];
   document.getElementById("record-list").innerHTML = "";
@@ -63,17 +82,6 @@ document.getElementById("finish-match-btn").addEventListener("click", () => {
 });
 
 // 試合一覧を画面に表示
-function updateMatchList() {
-  const matchListEl = document.getElementById("match-list");
-  matchListEl.innerHTML = "";
-
-  allMatches.forEach((matchRecords, index) => {
-    const li = document.createElement("li");
-    li.textContent = `試合 ${index + 1}：${matchRecords.length} ポイント`;
-    matchListEl.appendChild(li);
-  });
-}
-
 function updateMatchList() {
   const matchListEl = document.getElementById("match-list");
   matchListEl.innerHTML = "";
