@@ -134,3 +134,30 @@ section {
   color: black;
   border-color: #ffca2c;
 }
+
+/* ショット選択ボタンのレスポンシブ対応 */
+#shot-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#shot-buttons button {
+  flex: 1 1 calc(20% - 0.5rem); /* 初期は5列 */
+  min-width: 80px;
+  box-sizing: border-box;
+}
+
+/* 中サイズの画面：4列 */
+@media (max-width: 900px) {
+  #shot-buttons button {
+    flex: 1 1 calc(25% - 0.5rem);
+  }
+}
+
+/* 小サイズの画面：2列 */
+@media (max-width: 600px) {
+  #shot-buttons button {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+}
