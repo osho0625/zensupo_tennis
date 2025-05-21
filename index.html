@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>テニス試合記録</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>テニス試合記録アプリ</h1>
 
-  <section>
-    <h2>プレイヤー選択</h2>
+  <div class="section">
+    <h2>選手</h2>
     <div id="player-buttons" class="button-group">
       <button data-value="A">A</button>
       <button data-value="B">B</button>
       <button data-value="C">C</button>
       <button data-value="D">D</button>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h2>ショットの種類</h2>
+  <div class="section">
+    <h2>ショット</h2>
     <div id="shot-buttons" class="button-group">
       <button data-value="F">F</button>
       <button data-value="FR">FR</button>
@@ -34,56 +33,60 @@
       <button data-value="NVZ">NVZ</button>
       <button data-value="other">other</button>
     </div>
-  </section>
+  </div>
 
-  <section>
+  <div class="section">
     <h2>結果</h2>
     <div id="result-buttons" class="button-group">
       <button data-value="○">○</button>
       <button data-value="×">×</button>
     </div>
-  </section>
 
-  <button id="record-btn">記録する</button>
+    <div id="sub-result-buttons" class="button-group hidden"></div>
+    <div id="mistake-detail-buttons" class="button-group hidden"></div>
+  </div>
 
-  <section>
-    <h2>現在の試合記録</h2>
+  <div class="section">
+    <button id="record-btn">記録</button>
+  </div>
+
+  <div class="section">
+    <h2>この試合の記録</h2>
     <ul id="record-list"></ul>
-  </section>
+  </div>
 
-  <button id="finish-match-btn">試合終了</button>
+  <div class="section">
+    <button id="finish-match-btn">試合終了して保存</button>
+  </div>
 
-  <section>
-    <h2>保存済み試合一覧</h2>
+  <div class="section">
+    <h2>過去の試合一覧</h2>
     <div id="match-list"></div>
-  </section>
+  </div>
 
-  <section>
-    <h2>試合詳細</h2>
+  <div class="section">
+    <h2>選択した試合の詳細</h2>
     <ul id="match-detail-list"></ul>
-  </section>
+  </div>
 
-  <!-- 編集用モーダル -->
+  <!-- 編集モーダル -->
   <div id="edit-modal" class="modal hidden">
     <div class="modal-content">
       <h2>記録を編集</h2>
-
-      <div>
-        <p>プレイヤー</p>
+      <div class="section">
+        <h3>選手</h3>
         <div id="modal-player-buttons" class="button-group"></div>
       </div>
-
-      <div>
-        <p>ショット</p>
+      <div class="section">
+        <h3>ショット</h3>
         <div id="modal-shot-buttons" class="button-group"></div>
       </div>
-
-      <div>
-        <p>結果</p>
+      <div class="section">
+        <h3>結果</h3>
         <div id="modal-result-buttons" class="button-group"></div>
+        <div id="sub-result-buttons" class="button-group hidden"></div>
       </div>
-
-      <div class="modal-actions">
+      <div class="section">
         <button id="modal-save-btn">保存</button>
         <button id="modal-cancel-btn">キャンセル</button>
       </div>

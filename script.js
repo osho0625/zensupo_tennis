@@ -4,6 +4,8 @@ const selected = {
   result: null,
 };
 
+let selectedSubResult = null;
+
 let currentMatchRecords = [];
 let allMatches = [];
 
@@ -14,6 +16,10 @@ function setupSelection(groupId, key) {
       buttons.forEach(btn => btn.classList.remove('selected'));
       button.classList.add('selected');
       selected[key] = button.dataset.value;
+
+      if (key === "result") {
+        toggleSubResultButtons(selected.result === "×");
+      }
     });
   });
 }
@@ -77,7 +83,12 @@ document.getElementById("record-btn").addEventListener("click", () => {
     btn => btn.dataset.value === player
   )?.textContent || player;
 
-  const record = `${playerName} ${shot} ${result}`;
+  let displayResult = result;
+  if (result === "×" && selectedSubResult) {
+    displayResult = `${selectedSubResult}×`;
+  }
+
+  const record = `${playerName} ${shot} ${displayResult}`;
   const index = currentMatchRecords.length;
   currentMatchRecords.push(record);
 
@@ -85,7 +96,9 @@ document.getElementById("record-btn").addEventListener("click", () => {
   document.getElementById("record-list").appendChild(li);
 
   Object.keys(selected).forEach(key => selected[key] = null);
+  selectedSubResult = null;
   document.querySelectorAll(".selected").forEach(btn => btn.classList.remove("selected"));
+  toggleSubResultButtons(false);
 });
 
 document.getElementById("finish-match-btn").addEventListener("click", () => {
@@ -161,9 +174,31 @@ const modalShotBtns = document.getElementById("modal-shot-buttons");
 const modalResultBtns = document.getElementById("modal-result-buttons");
 const modalSaveBtn = document.getElementById("modal-save-btn");
 const modalCancelBtn = document.getElementById("modal-cancel-btn");
+const subResultBtns = document.getElementById("sub-result-buttons");
+const subResultOptions = ["ネ", "バ", "サ"];
 
 let editIndex = null;
 let editLi = null;
+
+function toggleSubResultButtons(show) {
+  subResultBtns.innerHTML = "";
+  selectedSubResult = null;
+  if (show) {
+    subResultOptions.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.addEventListener("click", () => {
+        Array.from(subResultBtns.children).forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedSubResult = opt;
+      });
+      subResultBtns.appendChild(btn);
+    });
+    subResultBtns.classList.remove("hidden");
+  } else {
+    subResultBtns.classList.add("hidden");
+  }
+}
 
 function createModalButtons(container, options, type) {
   container.innerHTML = "";
@@ -175,6 +210,9 @@ function createModalButtons(container, options, type) {
       Array.from(container.children).forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
       selected[type] = btn.dataset.value;
+      if (type === "result") {
+        toggleSubResultButtons(selected.result === "×");
+      }
     });
     container.appendChild(btn);
   });
@@ -197,9 +235,17 @@ function createRecordLi(text, index) {
       alert("データ形式が不正です");
       return;
     }
+
     selected.player = parts[0];
     selected.shot = parts[1];
-    selected.result = parts[2];
+    const res = parts[2];
+    if (["ネ×", "バ×", "サ×"].includes(res)) {
+      selected.result = "×";
+      selectedSubResult = res[0];
+    } else {
+      selected.result = res;
+      selectedSubResult = null;
+    }
 
     updateModalSelections();
     modal.classList.remove("hidden");
@@ -215,6 +261,14 @@ function updateModalSelections() {
       btn.classList.toggle("selected", btn.dataset.value === selected[key]);
     });
   });
+
+  toggleSubResultButtons(selected.result === "×");
+
+  if (selected.result === "×" && selectedSubResult) {
+    Array.from(subResultBtns.children).forEach(btn => {
+      btn.classList.toggle("selected", btn.textContent === selectedSubResult);
+    });
+  }
 }
 
 modalSaveBtn.addEventListener("click", () => {
@@ -223,9 +277,13 @@ modalSaveBtn.addEventListener("click", () => {
     return;
   }
 
-  const newRecord = `${selected.player} ${selected.shot} ${selected.result}`;
-  if (!new RegExp(`^[^ ]+ (F|FR|BR|FS|BS|FV|BV|Sm|HV|NVZ|other) [○×]$`).test(newRecord)) {
-    alert("入力形式が正しくありません（例: A FR ○）");
+  let newRecord = `${selected.player} ${selected.shot} ${selected.result}`;
+  if (selected.result === "×" && selectedSubResult) {
+    newRecord = `${selected.player} ${selected.shot} ${selectedSubResult}×`;
+  }
+
+  if (!/^[^ ]+ (F|FR|BR|FS|BS|FV|BV|Sm|HV|NVZ|other) ([○×]|[ネバサ]×)$/.test(newRecord)) {
+    alert("入力形式が正しくありません（例: A FR ○ または A FR ネ×）");
     return;
   }
 
@@ -234,6 +292,7 @@ modalSaveBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
 
   selected.player = selected.shot = selected.result = null;
+  selectedSubResult = null;
 });
 
 modalCancelBtn.addEventListener("click", () => {
