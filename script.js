@@ -8,6 +8,7 @@ let currentMatchRecords = [];  // 今の試合の記録
 let allMatches = [];           // 保存した試合のリスト
 
 function setupSelection(groupId, key) {
+  console.log("setupSelection called for", groupId);
   const buttons = document.querySelectorAll(`#${groupId} button`);
   buttons.forEach(button => {
     button.addEventListener('click', () => {
