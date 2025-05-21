@@ -31,10 +31,25 @@ document.getElementById("record-btn").addEventListener("click", () => {
   }
 
   const record = `${player} ${shot} ${result}`;
+  const index = currentMatchRecords.length; // 今の位置を記録
   currentMatchRecords.push(record);
 
   const li = document.createElement("li");
   li.textContent = record;
+
+  // ダブルクリックで修正できるように
+  li.addEventListener("dblclick", () => {
+    const newRecord = prompt("修正内容を入力してください（例: A FS ○）", li.textContent);
+    if (newRecord) {
+      if (!/^[ABCD] (FS|BS|SV|NT) [○×]$/.test(newRecord)) {
+        alert("入力形式が正しくありません（例: A FS ○）");
+        return;
+      }
+      currentMatchRecords[index] = newRecord;
+      li.textContent = newRecord;
+    }
+  });
+
   document.getElementById("record-list").appendChild(li);
 
   // 選択リセット
@@ -52,11 +67,11 @@ document.getElementById("finish-match-btn").addEventListener("click", () => {
   // 試合データをallMatchesに追加
   allMatches.push([...currentMatchRecords]);
 
-  // 画面の試合一覧に追加表示
+  // 試合一覧に表示
   updateMatchList();
 
   // APIへ送信
-  const apiUrl = 'https://tennis-api.onrender.com/api/matches';  // 自分のAPI URLに変更してください
+  const apiUrl = 'https://tennis-api.onrender.com/api/matches'; // ご自身のURLに
   const matchData = {
     matchNumber: allMatches.length,
     records: currentMatchRecords
@@ -98,6 +113,7 @@ function updateMatchList() {
   });
 }
 
+// 詳細表示
 function showMatchDetail(matchIndex) {
   const detailListEl = document.getElementById("match-detail-list");
   detailListEl.innerHTML = "";
