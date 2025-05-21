@@ -298,3 +298,34 @@ modalSaveBtn.addEventListener("click", () => {
 modalCancelBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
 });
+
+// 右上5回タップで強制リロード
+let tapCount = 0;
+let lastTapTime = 0;
+
+const cornerTapArea = document.createElement('div');
+cornerTapArea.style.position = 'fixed';
+cornerTapArea.style.top = '0';
+cornerTapArea.style.right = '0';
+cornerTapArea.style.width = '50px';
+cornerTapArea.style.height = '50px';
+cornerTapArea.style.zIndex = '1000';
+cornerTapArea.style.background = 'transparent'; // 透明
+cornerTapArea.style.cursor = 'pointer';
+document.body.appendChild(cornerTapArea);
+
+cornerTapArea.addEventListener('click', () => {
+  const now = Date.now();
+  if (now - lastTapTime > 2000) {
+    tapCount = 1; // 2秒以上空いたらカウントリセット
+  } else {
+    tapCount++;
+  }
+  lastTapTime = now;
+
+  if (tapCount >= 5) {
+    tapCount = 0;
+    console.log('5回タップ検出 → 強制リロードします');
+    location.reload(true); // キャッシュを無視してリロード（ただしブラウザによっては無視される可能性あり）
+  }
+});
