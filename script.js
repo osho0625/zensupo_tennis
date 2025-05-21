@@ -130,3 +130,94 @@ function showMatchDetail(matchIndex) {
     detailListEl.appendChild(li);
   });
 }
+
+// モーダル要素取得
+const modal = document.getElementById("edit-modal");
+const modalPlayerBtns = document.getElementById("modal-player-buttons");
+const modalShotBtns = document.getElementById("modal-shot-buttons");
+const modalResultBtns = document.getElementById("modal-result-buttons");
+const modalSaveBtn = document.getElementById("modal-save-btn");
+const modalCancelBtn = document.getElementById("modal-cancel-btn");
+
+let editIndex = null; // 編集対象インデックス
+let editLi = null;    // 編集対象の <li>
+
+// モーダル用の選択肢を生成
+function createModalButtons(container, options, type) {
+  container.innerHTML = "";
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.dataset.value = opt;
+    btn.addEventListener("click", () => {
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      modalSelected[type] = opt;
+    });
+    container.appendChild(btn);
+  });
+}
+
+const modalSelected = {
+  player: null,
+  shot: null,
+  result: null,
+};
+
+// モーダルを開く関数
+function openEditModal(index, liElement) {
+  const record = currentMatchRecords[index]; // 例: "A FS ○"
+  const [p, s, r] = record.split(" ");
+
+  modalSelected.player = p;
+  modalSelected.shot = s;
+  modalSelected.result = r;
+
+  createModalButtons(modalPlayerBtns, ["A", "B", "C", "D"], "player");
+  createModalButtons(modalShotBtns, ["FS", "BS", "SV", "NT"], "shot");
+  createModalButtons(modalResultBtns, ["○", "×"], "result");
+
+  // 初期選択状態にする
+  modalPlayerBtns.querySelector(`button[data-value="${p}"]`)?.classList.add("selected");
+  modalShotBtns.querySelector(`button[data-value="${s}"]`)?.classList.add("selected");
+  modalResultBtns.querySelector(`button[data-value="${r}"]`)?.classList.add("selected");
+
+  editIndex = index;
+  editLi = liElement;
+  modal.classList.remove("hidden");
+}
+
+// 保存ボタン処理
+modalSaveBtn.addEventListener("click", () => {
+  const { player, shot, result } = modalSelected;
+  if (!player || !shot || !result) {
+    alert("すべて選択してください");
+    return;
+  }
+
+  const updated = `${player} ${shot} ${result}`;
+  currentMatchRecords[editIndex] = updated;
+  editLi.textContent = updated;
+
+  // 再びダブルクリックで編集可能にする
+  editLi.addEventListener("dblclick", () => openEditModal(editIndex, editLi));
+
+  modal.classList.add("hidden");
+});
+
+// キャンセルボタン処理
+modalCancelBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+// li 生成時のイベント変更（元のprompt形式のものを以下で置き換え）
+function createRecordLi(record, index) {
+  const li = document.createElement("li");
+  li.textContent = record;
+  li.addEventListener("dblclick", () => openEditModal(index, li));
+  return li;
+}
+
+// 記録時の処理（既存の記録ボタンの中身のli生成部分をこれに変更）
+const li = createRecordLi(record, index);
+document.getElementById("record-list").appendChild(li);
