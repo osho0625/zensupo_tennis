@@ -1,4 +1,4 @@
-import { selected, selectedSubResult } from './selection.js';
+import { selected, getSelectedSubResult, setSelectedSubResult } from './selection.js';
 import { currentMatchRecords } from './recordManager.js';
 
 let editIndex = null;
@@ -49,10 +49,10 @@ export function attachEditListenerToLi(li, index) {
     const res = parts[2];
     if (["ネ×", "バ×", "サ×"].includes(res)) {
       selected.result = "×";
-      selectedSubResult = res[0];
+      setSelectedSubResult(res[0]);
     } else {
       selected.result = res;
-      selectedSubResult = null;
+      setSelectedSubResult(null);
     }
 
     updateModalSelections();
@@ -69,14 +69,14 @@ function toggleSubResultButtons(show) {
       btn.addEventListener("click", () => {
         Array.from(subResultBtns.children).forEach(b => b.classList.remove("selected"));
         btn.classList.add("selected");
-        selectedSubResult = opt;
+        setSelectedSubResult(opt);
       });
       subResultBtns.appendChild(btn);
     });
     subResultBtns.classList.remove("hidden");
   } else {
     subResultBtns.classList.add("hidden");
-    selectedSubResult = null;
+    setSelectedSubResult(null);
   }
 }
 
@@ -108,9 +108,9 @@ function updateModalSelections() {
 
   toggleSubResultButtons(selected.result === "×");
 
-  if (selected.result === "×" && selectedSubResult) {
+  if (selected.result === "×" && getSelectedSubResult()) {
     Array.from(subResultBtns.children).forEach(btn => {
-      btn.classList.toggle("selected", btn.textContent === selectedSubResult);
+      btn.classList.toggle("selected", btn.textContent === getSelectedSubResult());
     });
   }
 }
@@ -121,9 +121,11 @@ function saveEdit() {
     return;
   }
 
+  let subRes = getSelectedSubResult();
+
   let newRecord = `${selected.player} ${selected.shot} ${selected.result}`;
-  if (selected.result === "×" && selectedSubResult) {
-    newRecord = `${selected.player} ${selected.shot} ${selectedSubResult}×`;
+  if (selected.result === "×" && subRes) {
+    newRecord = `${selected.player} ${selected.shot} ${subRes}×`;
   }
 
   if (!/^[^ ]+ (F|SA|FR|BR|FS|BS|FV|BV|Sm|HV|NVZ|other) ([○×]|[ネバサ]×)$/.test(newRecord)) {
@@ -136,5 +138,5 @@ function saveEdit() {
   modal.classList.add("hidden");
 
   selected.player = selected.shot = selected.result = null;
-  selectedSubResult = null;
+  setSelectedSubResult(null);
 }

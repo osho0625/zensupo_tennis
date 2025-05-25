@@ -1,25 +1,10 @@
 import { setupSelection } from './selection.js';
+import { getSelectedSubResult, setSelectedSubResult } from './selection.js';
 import { enablePlayerNameEditing } from './editPlayerName.js';
 import { setupRecordHandler } from './recordManager.js';
 import { setupMatchManager } from './matchManager.js';
 import { setupModalEditor } from './modalEditor.js';
 
-// グローバル選択状態
-export const selected = {
-  player: null,
-  shot: null,
-  result: null,
-};
-
-export let selectedSubResult = null;
-export function setSelectedSubResult(value) {
-  selectedSubResult = value;
-}
-export function getSelectedSubResult() {
-  return selectedSubResult;
-}
-
-// 現在の試合と全試合データ
 export let currentMatchRecords = [];
 export let allMatches = [];
 

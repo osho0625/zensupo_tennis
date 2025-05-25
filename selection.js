@@ -4,7 +4,15 @@ export const selected = {
   result: null,
 };
 
-export let selectedSubResult = null;
+let selectedSubResult = null;
+
+export function getSelectedSubResult() {
+  return selectedSubResult;
+}
+
+export function setSelectedSubResult(value) {
+  selectedSubResult = value;
+}
 
 export function setupSelection(groupId, key) {
   const buttons = document.querySelectorAll(`#${groupId} button`);

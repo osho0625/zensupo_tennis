@@ -1,4 +1,4 @@
-import { selected, selectedSubResult } from './selection.js';
+import { selected, getSelectedSubResult, setSelectedSubResult } from './selection.js';
 import { createRecordLi } from './utils.js';
 
 export let currentMatchRecords = [];
@@ -16,8 +16,9 @@ export function setupRecordHandler() {
     )?.textContent || player;
 
     let displayResult = result;
-    if (result === "×" && selectedSubResult) {
-      displayResult = `${selectedSubResult}×`;
+    const subResult = getSelectedSubResult();
+    if (result === "×" && subResult) {
+      displayResult = `${subResult}×`;
     }
 
     const record = `${playerName} ${shot} ${displayResult}`;
@@ -28,6 +29,8 @@ export function setupRecordHandler() {
     document.getElementById("record-list").appendChild(li);
 
     Object.keys(selected).forEach(key => selected[key] = null);
+    setSelectedSubResult(null);
+
     document.querySelectorAll(".selected").forEach(btn => btn.classList.remove("selected"));
     const event = new Event("clearSubResult");
     document.dispatchEvent(event);
