@@ -161,3 +161,56 @@ section {
     flex: 1 1 calc(50% - 0.5rem);
   }
 }
+
+/* 共通ボタンのベーススタイル */
+button {
+  font-size: 16px;
+  padding: 12px;
+  margin: 6px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* ✅ 選手ボタン：横4つ、縦にもやや大きめ */
+#player-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+#player-buttons button {
+  font-size: 18px;
+  padding: 20px 0; /* 縦に大きく */
+}
+
+/* ✅ ショットボタン：横2つ、縦に大きめ */
+#shot-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+#shot-buttons button {
+  font-size: 20px;
+  padding: 28px 0;  /* 縦にさらに大きく */
+}
+
+/* ✅ 結果ボタン（○×）：縦横3倍くらい */
+#result-buttons button {
+  font-size: 28px;
+  padding: 30px 0;
+  min-width: 120px;
+}
+
+/* ✅ 記録ボタンと試合終了ボタン：3倍くらい大きく */
+#record-btn,
+#finish-match-btn {
+  font-size: 24px;
+  padding: 20px 40px;
+  margin: 16px auto;
+  display: block;
+  width: 90%;
+  max-width: 400px;
+}

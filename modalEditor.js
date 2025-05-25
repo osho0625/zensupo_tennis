@@ -15,7 +15,7 @@ const subResultOptions = ["ネ", "バ", "サ"];
 
 export function setupModalEditor() {
   createModalButtons(modalPlayerBtns, ["A", "B", "C", "D"], "player");
-  createModalButtons(modalShotBtns, ["F", "FR", "BR", "FS", "BS", "FV", "BV", "Sm", "HV", "NVZ", "other"], "shot");
+  createModalButtons(modalShotBtns, ["F", "SA", "FR", "BR", "FS", "BS", "FV", "BV", "Sm", "HV", "NVZ", "other"], "shot");
   createModalButtons(modalResultBtns, ["○", "×"], "result");
 
   modalSaveBtn.addEventListener("click", saveEdit);
@@ -126,7 +126,7 @@ function saveEdit() {
     newRecord = `${selected.player} ${selected.shot} ${selectedSubResult}×`;
   }
 
-  if (!/^[^ ]+ (F|FR|BR|FS|BS|FV|BV|Sm|HV|NVZ|other) ([○×]|[ネバサ]×)$/.test(newRecord)) {
+  if (!/^[^ ]+ (F|SA|FR|BR|FS|BS|FV|BV|Sm|HV|NVZ|other) ([○×]|[ネバサ]×)$/.test(newRecord)) {
     alert("入力形式が正しくありません（例: A FR ○ または A FR ネ×）");
     return;
   }
