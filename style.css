@@ -214,3 +214,22 @@ button {
   width: 90%;
   max-width: 400px;
 }
+
+#back-to-top {
+  font-size: 20px;
+  padding: 16px 28px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 80%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: block;
+}
+
+#back-to-top:hover {
+  background-color: #45a049;
+}
+

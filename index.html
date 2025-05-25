@@ -33,5 +33,32 @@
   <a class="button" href="record.html">▶ 試合記録を開始する</a>
 
   <p style="margin-top: 50px; color: gray;">© 2025 Zensupo Tennis</p>
+  <div class="section">
+    <button onclick="clearCacheAndReload()">キャッシュをクリアして再読み込み</button>
+  </div>
+
+  <script>
+    function clearCacheAndReload() {
+      // サービスワーカーのキャッシュなども解除を試みる
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
+        });
+      }
+
+      // サービスワーカーの登録を解除（もしあれば）
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+
+      // 強制的に再読み込み
+      location.reload(true);
+    }
+  </script>
+  
 </body>
 </html>
