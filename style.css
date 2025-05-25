@@ -148,6 +148,18 @@ section {
   box-sizing: border-box;
 }
 
+#sub-result-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 横に3つ並ぶ */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#sub-result-buttons button {
+  font-size: 48px;
+  padding: 40px 0; /* 縦にも大きめ */
+}
+
 /* 中サイズの画面：4列 */
 @media (max-width: 900px) {
   #shot-buttons button {
@@ -173,7 +185,7 @@ button {
   box-sizing: border-box;
 }
 
-/* ✅ 選手ボタン：横4つ、縦にもやや大きめ */
+/*  選手ボタン：横4つ、縦にもやや大きめ */
 #player-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -181,11 +193,11 @@ button {
 }
 
 #player-buttons button {
-  font-size: 18px;
-  padding: 20px 0; /* 縦に大きく */
+  font-size: 58px;
+  padding: 40px 0; /* 縦に大きく */
 }
 
-/* ✅ ショットボタン：横2つ、縦に大きめ */
+/*  ショットボタン：横2つ、縦に大きめ */
 #shot-buttons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -193,21 +205,27 @@ button {
 }
 
 #shot-buttons button {
-  font-size: 20px;
-  padding: 28px 0;  /* 縦にさらに大きく */
+  font-size: 58px;
+  padding: 60px 0;  /* 縦にさらに大きく */
 }
 
-/* ✅ 結果ボタン（○×）：縦横3倍くらい */
+/*  結果ボタン（○×）：横2つ並べて大きく */
+#result-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
 #result-buttons button {
-  font-size: 28px;
-  padding: 30px 0;
+  font-size: 68px;
+  padding: 60px 0;
   min-width: 120px;
 }
 
-/* ✅ 記録ボタンと試合終了ボタン：3倍くらい大きく */
+/*  記録ボタンと試合終了ボタン：3倍くらい大きく */
 #record-btn,
 #finish-match-btn {
-  font-size: 24px;
+  font-size: 76px;
   padding: 20px 40px;
   margin: 16px auto;
   display: block;
@@ -215,8 +233,49 @@ button {
   max-width: 400px;
 }
 
+/* 記録リストのスタイル */
+#record-list {
+  font-size: 48px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* 過去の試合一覧のボタンを大きく */
+#match-list button {
+  font-size: 48px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+#match-list button:hover {
+  background-color: #1976D2;
+}
+
+/* 選択した試合の詳細リストも少し大きく */
+#match-detail-list {
+  font-size: 48px;
+  padding-left: 20px;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
 #back-to-top {
-  font-size: 20px;
+  font-size: 40px;
   padding: 16px 28px;
   background-color: #4CAF50;
   color: white;
